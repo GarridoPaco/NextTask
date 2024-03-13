@@ -1,0 +1,39 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.menu-mobile {
+    background-color: v.$azulOscuro;
+    margin: .7rem;
+    border-radius: 1rem;
+    padding: 2rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include m.tablet {
+        display: none;
+    }
+
+    .logo {
+        img {
+            width: 6rem;
+        }
+        .nexttask{
+            font-size: 4rem;
+        }
+    }
+
+    h1 {
+        color: v.$blanco;
+        margin: 0;
+        font-size: 3.5rem;
+        
+    }
+    .menu {
+        img {
+            width: 4rem;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

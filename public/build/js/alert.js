@@ -1,0 +1,1 @@
+const infoAction=Swal.mixin({toast:!0,color:"#0a3a67ff",position:"top-end",showConfirmButton:!1,timer:3e3,timerProgressBar:!0,didOpen:o=>{o.onmouseenter=Swal.stopTimer,o.onmouseleave=Swal.resumeTimer},customClass:{title:"font-size: 3rem;"}});

@@ -1,0 +1,117 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.vista-general {
+
+    @include m.tablet {
+        flex: 1;
+        @include m.grid(2, 2, 1rem);
+    }
+
+    .boton {
+        @include m.boton(v.$azul, v.$blanco);
+    }
+
+    .calendario {
+        background-color: v.$azulLiso;
+        border-radius: 1rem;
+        padding: 1rem;
+        width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+
+        @include m.tablet {
+            height: 100%;
+            margin: 0;
+        }
+    }
+
+    .vista-info {
+        background-color: v.$azulLiso;
+        border-radius: 1rem;
+        padding: 1.5rem;
+        width: 100%;
+        height: auto;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+
+        @include m.tablet {
+            grid-column-start: 2;
+            grid-column-end: 3;
+            grid-row-start: 1;
+            grid-row-end: 3;
+            height: 100%;
+            margin: 0;
+        }
+
+        span {
+            float: right;
+            font-weight: 600;
+        }
+    }
+
+    .collaboratorsContainer {
+        background-color: v.$azulLiso;
+        border-radius: 1rem;
+        padding: 1rem;
+        width: 100%;
+        height: auto;
+
+        @include m.tablet {
+            height: 100%;
+        }
+
+        .no-collaborators {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        .collaboratorsList {
+            background-color: v.$azulLiso;
+            display: grid;
+            grid-auto-flow: dense;
+            /* Espacio entre los elementos */
+            grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+            /* Columnas de tamaño mínimo 200px */
+            //grid-template-columns: repeat(6, 1fr);
+            grid-gap: 1rem;
+
+            .containerCollaborator {
+                background-color: v.$blanco;
+                padding: .5rem;
+                border-radius: 1rem;
+                min-width: 8rem;
+
+                .actionImg {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                .collaboratorInfo {
+                    display: inline-flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .collaboratorName {
+                        text-align: center;
+                        margin: 0;
+                    }
+
+                    .collaboratorImg {
+                        border-radius: 50%;
+                        max-width: 100%;
+                        height: auto;
+                        width: 5rem;
+                        height: 5rem;
+                    }
+                }
+
+            }
+        }
+
+        .boton {
+            margin-top: 2.5rem;
+        }
+    }
+}

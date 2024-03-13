@@ -1,0 +1,12 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+#profileForm, #passwordForm {
+    input[type=text], 
+    input[type=password], 
+    input[type=file],
+    input[type=email] {
+        background-color: v.$blanco;
+        border-radius: 1rem;
+    }
+}

@@ -1,0 +1,41 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.nav-views {
+    display: flex;
+
+    @include m.tablet {
+        justify-content:flex-start;
+    }
+
+    form{
+        width: 50%;
+
+        @include m.tablet {
+            width: auto;
+        }
+    }
+
+    .viewBtn {
+        cursor: pointer;
+        font-size: 2.5rem;
+        border: none;
+        color: v.$blanco;
+        background-color: darken(v.$azulLiso, 10%);
+        padding: .7rem 2rem;
+        border-radius: 1rem 1rem 0 0;
+        transition: all ease 300ms;
+        width: 100%;
+
+        &:hover,
+        &.activo {
+            background-color: v.$azulLiso;
+            color: v.$gris;
+        }
+
+        @include m.tablet {
+            font-size: 1.3rem;
+        }
+    }
+
+}

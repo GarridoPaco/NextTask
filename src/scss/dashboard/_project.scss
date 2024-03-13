@@ -1,0 +1,12 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.contenido-project {
+    display: flex;
+    border-radius: 1rem;
+    background-color: v.$blanco;
+    flex-grow: 1;
+    @include m.tablet {
+        margin-top: .7rem;
+    }
+}

@@ -1,0 +1,65 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+#welcome-message {
+    text-align: center;
+    padding: 0 5rem;
+    color: v.$azulOscuro;
+    font-size: 2rem;
+    margin-top: 5rem;
+}
+.projectsList {
+    .alerta {
+        display: none;
+    }
+    li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        #createProjectForm {
+            flex-grow: 1;
+
+            .boton-proyecto {
+                background-color: v.$blanco;
+                border: none;
+                border-radius: .5rem;
+                margin-top: .5rem;
+                margin-bottom: .5rem;
+                transition: all ease 300ms;
+                display: flex;
+                justify-content: space-between;
+                padding: .7rem;
+                width: 100%;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: v.$azul;
+
+                    p {
+                        color: v.$blanco;
+                    }
+                }
+
+                p {
+                    font-size: 1.3rem;
+                    font-weight: 500;
+                    margin: 0;
+                    padding-left: 2rem;
+                }
+
+                .info-project {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+        }
+        #deleteProjectBtn {
+            float: right;
+            width: auto;
+            font-size: 1.3rem;
+            margin: 0 0 0 1rem;
+            padding: 1rem 3rem;
+        }
+
+    }
+}

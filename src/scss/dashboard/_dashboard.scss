@@ -1,0 +1,30 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.dashboard {
+    background-color: v.$blanco;
+    overflow-y: hidden;
+
+    @include m.tablet {
+        display: flex;
+        height: 100vh;
+    }
+
+    .principal {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow:auto;
+        padding: .7rem;
+    }
+    .contenido{
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-top: .7rem;
+        background-color: v.$azulLiso;
+        flex-grow: 1;
+    }
+}

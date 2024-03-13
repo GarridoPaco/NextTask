@@ -1,0 +1,60 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.formulario{
+    margin-top: 5rem;
+    legend{
+        font-size: 2rem;
+        margin-bottom: 4rem;
+        color: v.$azulOscuro;
+        font-weight: 600;
+    }
+    .campo{
+        display: flex;
+
+        flex-direction: column;
+        // @include m.tablet {
+        //     align-items: center;
+        //     flex-direction: row;
+        // }
+        margin-bottom: 2rem;
+        label{
+            margin-bottom: 1rem;
+            // @include m.tablet {
+            //     flex: 0 0 10rem;
+            //     margin-bottom: 0rem;
+            // }
+
+            span{
+                color: v.$gris;
+                font-size: 1.2rem;
+            }
+        }
+        input, textarea{
+            width: 100%;
+            padding: 1rem;
+            border: none;    
+            background-color: lighten(v.$azulLiso, 10%);
+            border-radius: .5rem;
+            @include m.tablet {
+                flex: 1;
+            }
+            &:focus {
+                background-color: white;
+                outline: none;
+                box-shadow: 0px 0px 5px 4px rgba(0,0,0,0.20);
+            }
+        }
+        textarea {
+            resize: none;
+            overflow: auto;
+        }
+        select {
+            width: auto;
+            border-radius: 1rem;
+            padding: .5rem;
+            background-color: lighten(v.$azulLiso, 10%);
+            border: none;
+        }
+    }
+}

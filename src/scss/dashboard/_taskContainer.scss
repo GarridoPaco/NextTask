@@ -1,0 +1,168 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+.no-tasks {
+    color: v.$azulOscuro;
+    text-align: center;
+}
+.taskContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: v.$blanco;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+
+    .taskActionsContainer {
+
+        .taskActions {
+            opacity: 0;
+            // display: none;
+            transition: all ease-in-out .3s;
+            &.active {
+                opacity: 1;
+                // display: block;
+            }
+        }
+
+
+        // &:hover .taskActions,
+        // .taskActionsBtn:hover {
+        //     display: block;
+
+        // }
+    }
+
+    .taskHeader {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding-bottom: 1rem;
+        //border-bottom: solid 2px v.$azulLiso;
+
+        .checkTask {
+            cursor: pointer;
+        }
+
+        .taskName {
+            margin: 0rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+        }
+
+        .taskOptions {
+            img {
+                margin-left: .5rem;
+            }
+        }
+    }
+
+    .toggleBtn {
+        margin: auto;
+    }
+
+    .taskContentContainer {
+        display: none;
+        &.active {
+            display: block;
+        }
+    }
+
+    .taskInfo {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .taskDescription {
+            display: flex;
+            align-items: center;
+
+            .taskDescriptionIcon {
+                width: 2rem;
+                height: auto;
+                margin-right: 2rem;
+            }
+
+            .taskDescriptionText {
+                margin: .5rem 0;
+            }
+
+        }
+
+        .taskPriority {
+            display: flex;
+            align-items: center;
+
+            .taskPriorityText {
+                margin: .5rem 0;
+
+            }
+
+            .taskPriorityColor {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                margin-right: 2rem;
+            }
+        }
+
+        .taskStatus {
+            display: flex;
+            align-items: center;
+
+            .taskStatusText {
+                margin: .5rem 0;
+            }
+
+            .taskStatusIcon {
+                width: 2rem;
+                height: auto;
+                margin-right: 2rem;
+            }
+        }
+    }
+
+    .taskAssignContainer {
+        font-size: 1.3rem;
+
+        .taskAssignTitle {
+            margin: .5rem 0;
+        }
+
+        .taskCollaboratorsContainer {
+            background-color: v.$azulLiso;
+            border-radius: 1rem;
+            padding: 1rem;
+
+            .taskCollaborator {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .collaboratorContainer{
+                    display: flex;
+                    align-items: center;
+                    .collaboratorImg {
+                        width: 3rem;
+                        height: 3rem;
+                        border-radius: 50%;
+                        margin-right: 1rem;
+                        @include m.tablet {
+                            width: 2rem;
+                            height: 2rem;
+                        }
+                    }
+                    .collaboratorName {
+                        margin: 0;
+                    }
+                }
+
+
+                .deleteCollaboratorBtn {
+                    width: 1.5rem;
+                    height: auto;
+                }
+            }
+        }
+    }
+
+}

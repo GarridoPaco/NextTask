@@ -1,0 +1,14 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+.fc-event-task-icon{
+  width: 4rem;
+  height: 4rem;
+  margin: auto;
+  cursor: pointer;
+}
+.fc .fc-toolbar-title {
+  font-size: 2rem;
+  color: v.$gris;
+  font-family: v.$fuente;
+  font-weight: 600;
+}

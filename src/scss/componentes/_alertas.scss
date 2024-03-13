@@ -1,0 +1,47 @@
+@use 'base/variables' as v;
+
+.alerta {
+    display: block;
+    padding: 1rem 1rem 1rem 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    max-width: 80rem;
+    animation: slideIn 0.5s ease-in-out, slideOut 0.5s ease-in-out 2.5s forwards;
+    &.error {
+        background-color: lighten(v.$rojo, $amount: 60%);
+        border-left: .5rem solid v.$rojo;
+        color: v.$rojo;
+    }
+
+    &.exito {
+        background-color: lighten(v.$verde, $amount: 60%);
+        border-left: .5rem solid v.$verde;
+        color: v.$verde;
+
+    }
+
+}
+
+@keyframes slideIn {
+    from {
+      //transform: translateY(-100%);
+      opacity: 0;
+    }
+    to {
+      //transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      //transform: translateY(0);
+      opacity: 1;
+
+    }
+    to {
+      //transform: translateY(-100%);
+      opacity: 0;
+      display: none;
+    }
+  }

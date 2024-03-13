@@ -1,0 +1,14 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+table,thead, th, td{
+    border: solid 2px v.$blanco;
+    border-collapse: collapse;
+    text-align: center;
+
+    img {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+    }
+}

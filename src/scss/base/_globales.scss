@@ -1,0 +1,56 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    height: 100%;
+}
+body {
+    font-family: v.$fuente;
+    font-size: 1.6rem;
+    min-height: 100%;
+}
+.contenedor {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.contenedor-sm {
+    max-width: 70rem;
+    margin: 0 auto;
+}
+a {
+    text-decoration: none;
+}
+img {
+    max-width: 100%;
+}
+ul {
+    list-style: none;
+    padding: 0;
+}
+.actionImg {
+    cursor: pointer;
+    opacity: .5;
+    width: 3rem;
+    height: auto;
+    margin-left: 1rem;
+    float: right;
+    &:hover {
+        opacity: 1;
+    }
+    @include m.tablet {
+        width: 2rem;
+        height: auto;
+    }
+}
+.boton {
+    @include m.boton(v.$azul, v.$blanco);
+    margin: auto;
+}
+
+

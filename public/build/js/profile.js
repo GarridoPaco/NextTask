@@ -1,0 +1,1 @@
+const imgProfile=document.getElementById("imgProfile"),urlImagenPerfil=imgProfile.src;function cargarImagenPerfil(){$.ajax({url:urlImagenPerfil,type:"HEAD",success:function(){$("#imgProfile").attr("src",urlImagenPerfil)},error:function(){setTimeout(cargarImagenPerfil,1e3)}})}console.log(urlImagenPerfil),$(document).ready((function(){}));

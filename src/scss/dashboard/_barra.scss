@@ -1,0 +1,55 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.barra {
+
+    background-color: v.$azulLiso;
+    padding: 1rem 2rem;
+    border-radius: 0 0 1rem 1rem;
+    
+    @include m.tablet {
+        border-radius: 0 1rem 1rem 1rem;
+    }
+
+    .boton {
+        border: none;
+        margin-right: 1rem;
+        margin-left: 1rem;
+        cursor: pointer;
+    }
+
+    @include m.tablet {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    p {
+        margin: 0;
+        font-size: 1.5rem;
+
+        span {
+            font-weight: 600;
+        }
+    }
+
+    .nombre-pagina {
+        font-size: 2rem;
+        text-align: center;
+        font-weight: 700;
+        color: v.$azulOscuro;
+    }
+
+    .info-user {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        img {
+            border-radius: 50%;
+            margin-left: 2rem;
+            width: 4rem;
+            height: auto;
+        }
+    }
+}

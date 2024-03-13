@@ -1,0 +1,1 @@
+const closeModalBtns=document.querySelectorAll(".closeModal");function closeModal(){document.querySelectorAll(".modal-overlay").forEach((function(o){o.style.display="none"}))}closeModalBtns.forEach((function(o){o.addEventListener("click",closeModal)}));
