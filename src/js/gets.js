@@ -2,7 +2,7 @@
 async function getProject() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/project?url=${urlProject}`;
+        const url = `${location.origin}/api/project?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
         return result.project;
@@ -14,7 +14,7 @@ async function getProject() {
 async function getTasks() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/tasks?url=${urlProject}`;
+        const url = `${location.origin}/api/tasks?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
 
@@ -28,7 +28,7 @@ async function getTasks() {
 async function getAssign() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/assignment?url=${urlProject}`;
+        const url = `${location.origin}/api/assignment?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
 
@@ -42,7 +42,7 @@ async function getAssign() {
 async function getCollaborators() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/collaboration?url=${urlProject}`;
+        const url = `${location.origin}/api/collaboration?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
         return result.collaborators;
@@ -74,7 +74,7 @@ async function getComments(task_id) {
 async function getUsers() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/users?url=${urlProject}`;
+        const url = `${location.origin}/api/users?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
 
@@ -88,7 +88,7 @@ async function getUsers() {
 async function getUser() {
     try {
         const urlProject = getUrlProject();
-        const url = `/api/user?url=${urlProject}`;
+        const url = `${location.origin}/api/user?url=${urlProject}`;
         const answer = await fetch(url);
         const result = await answer.json();
 
