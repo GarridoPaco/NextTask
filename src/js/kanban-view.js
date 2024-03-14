@@ -9,9 +9,8 @@ function closeModal() {
 
 }
 async function showTasksKanban() {
+    const loadingOverlay = document.getElementById('loading-overlay');
     try {
-        const loadingOverlay = document.getElementById('loading-overlay');
-
         const tasks = await getTasks();
         const collaborators = await getCollaborators();
         selectCollaborators(collaborators);
