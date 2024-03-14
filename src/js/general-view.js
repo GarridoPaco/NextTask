@@ -71,7 +71,7 @@ async function main() {
         }
         loadingOverlay.style.display = 'none';
     } catch (error) {
-        loadingImgView.style.display = 'none';
+        loadingOverlay.style.display = 'none';
         infoAction.fire({
             icon: "error",
             title: 'No se ha podido cargar la pagina'
