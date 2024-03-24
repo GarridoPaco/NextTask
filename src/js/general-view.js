@@ -1,25 +1,41 @@
-// Constantes de control sobre la vista en la que nos encontramos
+/**
+ * Constantes de control sobre la vista en la que nos encontramos.
+ * 
+ * Estas constantes se utilizan para controlar la vista actual de la aplicación.
+ * `generalView` indica si la vista actual es la vista general.
+ * `kanbanView` indica si la vista actual es la vista de kanban.
+ */
 const generalView = true;
 const kanbanView = false;
 
+/**
+ * Función principal que se ejecuta al cargar la página.
+ * 
+ * Esta función realiza varias tareas al cargar la página, incluyendo la obtención de datos del proyecto,
+ * colaboradores, usuarios y tareas, así como la visualización de estos datos en la interfaz de usuario.
+ * También gestiona eventos de botones y elementos interactivos en la interfaz de usuario.
+ */
 async function main() {
+    const loadingOverlay = document.getElementById('loading-overlay');
     try {
-        const loadingOverlay = document.getElementById('loading-overlay');
 
         loadingOverlay.style.display = 'flex';
 
+        // Obtener datos del proyecto, colaboradores, usuarios y tareas
         let project = await getProject();
         let collaborators = await getCollaborators();
         let users = await getUsers();
         let tasks = await getTasks();
         let user = await getUser();
-        
+
+        // Mostrar el proyecto, tareas, colaboradores, usuarios y calendario en la interfaz de usuario
         await showProject(project);
         await showTasks(tasks, user, project);
         await showCollaborators(project, users, collaborators);
         await showUsers(users, collaborators);
         await showCalendar(tasks, user, project);
 
+        // Configurar eventos de los botones y elementos interactivos
         // Botón para mostrar el modal para editar el proyecto
         const editProjectBtn = document.querySelector('.editProjectBtn');
         editProjectBtn.onclick = function () {
@@ -48,20 +64,14 @@ async function main() {
         // Botón para mostrar el modal para añadir tarea
         const newTaskBtn = document.querySelector('#addTask');
         newTaskBtn.onclick = function () {
-            newTaskModal(tasks, user, project);
+            newTaskModal(user, project);
         }
 
         // Botón para mostrar el modal de los colaboradores
         let openModalCollaborators = document.querySelector('#openModalCollaborators');
-        // Agregar el primer manejador de eventos
         openModalCollaborators.addEventListener('click', function () {
             collaboratorsModal(users, project);
         });
-
-        // Agregar el segundo manejador de eventos
-        // openModalCollaborators.addEventListener('click', function () {
-        //     showUsers(users, collaborators);
-        // });
 
         // Botón para enviar una invitación
         const invitationBtn = document.getElementById('invitationBtn');
@@ -71,10 +81,15 @@ async function main() {
         }
         loadingOverlay.style.display = 'none';
     } catch (error) {
+        // En caso de error, muestra un mensaje de error y redirecciona al usuario a su página de inicio
         loadingOverlay.style.display = 'none';
-        infoAction.fire({
+        Swal.fire({
+            title: "No se ha podido cargar el proyecto",
+            text: "Inténtelo de nuevo en unos instantes",
             icon: "error",
-            title: 'No se ha podido cargar la pagina'
+            confirmButtonColor: "#0075beff"
+        }).then(() => {
+            window.location.href = "/dashboard";
         });
         console.log(error);
     }

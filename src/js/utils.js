@@ -1,13 +1,17 @@
-// Menú mobile
+/**
+ * Gestiona el menú móvil y los estilos de la barra de usuario.
+ */
 const mobileMenuBtn = document.querySelector('#mobileMenuBtn');
 const mobileCloseBtn = document.querySelector('#mobileCloseBtn');
 const sidebar = document.querySelector('.sidebar');
+// Abre el menú móvil al hacer clic en el botón correspondiente
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', function () {
         sidebar.classList.add('show');
         console.log('menu mobile');
     });
 }
+// Cierra el menú móvil al hacer clic en el botón de cerrar
 if (mobileCloseBtn) {
     mobileCloseBtn.addEventListener('click', function () {
         sidebar.classList.add('hide');
@@ -16,61 +20,81 @@ if (mobileCloseBtn) {
     })
 }
 
-// Elimina la clase de mostrar, en un tamaño de tablet y mayores
-const anchoPantalla = document.body.clientWidth;
-
+// Cierra el menú móvil cuando el ancho de la pantalla es mayor o igual a 768px
 window.addEventListener('resize', function () {
-    const anchoPantalla = document.body.clientWidth;
-    if (anchoPantalla >= 768) {
+    const screenWidth = document.body.clientWidth;
+    if (screenWidth >= 768) {
         sidebar.classList.remove('show');
     }
-})
+});
 
-// Estilos para la barra de usuario
+// Aplica estilos a la barra de usuario si no hay vistas de navegación
 const navViews = document.querySelector('#navViews');
 const barra = document.querySelector('.barra');
 if (!navViews) {
     barra.style.borderRadius = '1rem';
 }
-// Botón para cerrar el modal
+
+// Cierra los modales al hacer clic en el botón de cerrar
 const closeModalBtns = document.querySelectorAll('.closeModal');
 closeModalBtns.forEach(function (closeModalBtn) {
     closeModalBtn.addEventListener('click', closeModal);
 });
 
-// Función para formatear las fechas
+/**
+ * Formatea una fecha en formato legible para el usuario en español.
+ * @param {string} date - La fecha a formatear en formato ISO 8601 (YYYY-MM-DD).
+ * @returns {string} La fecha formateada en formato "Día de la semana, DD de Mes de Año".
+ */
 function formatDate(date) {
-    // Formatear la fecha en español
+    // Convertir la fecha a objeto Date
     const dateObj = new Date(date);
+
+    // Obtener los componentes de la fecha: mes, día y año
     const month = dateObj.getMonth();
     const day = dateObj.getDate();
     const year = dateObj.getFullYear();
 
+    // Crear una nueva fecha UTC para evitar cambios debido a la zona horaria
     const fechaUTC = new Date(Date.UTC(year, month, day));
 
+    // Opciones de formato de fecha para obtener el nombre del día de la semana y el mes
     const optionsDate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
-    return fechaUTC.toLocaleDateString('es-Mx', optionsDate);
+    return fechaUTC.toLocaleDateString('es-ES', optionsDate);
 }
 
 
-// Función para cerrar los modales de los formularios
+/**
+ * Cierra todos los modales de formularios en la página.
+ */
 function closeModal() {
+    // Obtener todos los elementos con la clase 'modal-overlay' que representan los modales
     const modals = document.querySelectorAll('.modal-overlay');
+
+    // Ocultar cada modal estableciendo su estilo de visualización en 'none'
     modals.forEach(function (modal) {
         modal.style.display = 'none';
     });
-
 }
 
-// Función para desplegar la info de la tarea
+
+/**
+ * Muestra u oculta el contenido de las tareas cuando se hace clic en el botón correspondiente.
+ */
 function showContentTask() {
+    // Obtener todos los botones de alternancia de contenido
     const toggleBtns = document.querySelectorAll('.toggleBtn');
+
+    // Agregar un evento de clic a cada botón
     toggleBtns.forEach(function (btn) {
         btn.addEventListener('click', function () {
+            // Obtener el contenido asociado al botón
             const content = this.nextElementSibling;
+
+            // Alternar la clase 'active' para mostrar u ocultar el contenido
             content.classList.toggle('active');
 
-            // Cambiar el src del icono dependiendo de si la clase active está presente o no
+            // Cambiar el ícono del botón según si el contenido está activo o no
             if (content.classList.contains('active')) {
                 btn.src = 'build/img/up_arrow_icon.svg';
             } else {
@@ -80,15 +104,23 @@ function showContentTask() {
     });
 }
 
-// Función para mostrar ocultar los botones de acciones de las tareas
+/**
+ * Muestra u oculta el menú de acciones de las tareas cuando se hace clic en el botón correspondiente.
+ */
 function taskActionsMenu() {
+    // Obtener todos los botones de acciones de tarea
     const taskActionsBtns = document.querySelectorAll('.taskActionsBtn');
+
+    // Agregar un evento de clic a cada botón
     taskActionsBtns.forEach(function (btn) {
+        // Obtener el menú de acciones asociado al botón
         btn.addEventListener('click', function () {
             const taskActions = this.nextElementSibling;
+
+            // Alternar la clase 'active' para mostrar u ocultar el menú de acciones
             taskActions.classList.toggle('active');
 
-            // Cambiar el src del icono dependiendo de si la clase active está presente o no
+            // Cambiar el ícono del botón según si el menú de acciones está activo o no
             if (taskActions.classList.contains('active')) {
                 btn.src = 'build/img/right_arrow_icon.svg';
             } else {
@@ -99,32 +131,46 @@ function taskActionsMenu() {
 }
 
 
-// Muestra un mensaje en la interfaz
+/**
+ * Muestra un mensaje de alerta en la interfaz.
+ * @param {string} mensaje - El mensaje que se mostrará en la alerta.
+ * @param {string} tipo - El tipo de alerta ('error', 'exito', etc.).
+ */
 function showAlert(mensaje, tipo) {
-    // Previene la creación de multiples alertas
+    // Evita la creación de múltiples alertas eliminando la anterior, si existe
     const alertaPrevia = document.querySelector('.alerta');
     if (alertaPrevia) {
         alertaPrevia.remove();
     }
 
-
+    // Crea un nuevo elemento de alerta
     const alerta = document.createElement('DIV');
     alerta.classList.add('alerta', tipo);
     alerta.textContent = mensaje;
 
-    // Inserta la alerta despues del legend
+    // Inserta la alerta después del elemento 'legend'
     const legend = document.querySelector('legend');
     legend.parentElement.insertBefore(alerta, legend.nextElementSibling);
 
-    // Eliminar la alerta después de 5 segundos
+    // Elimina la alerta después de 5 segundos
     setTimeout(() => {
         alerta.remove();
     }, 5000);
 }
 
-// Función para generar el contenedor de las tareas
-async function taskBin(tasks, task, assignments, collaborators, ancla, user, project) {
+/**
+ * Genera el contenedor para mostrar la información de una tarea.
+ * @param {Object} task - Objeto que contiene la información de la tarea.
+ * @param {Array} assignments - Lista de asignaciones de tareas.
+ * @param {Array} collaborators - Lista de colaboradores del proyecto.
+ * @param {HTMLElement} ancla - Elemento HTML al que se adjunta el contenedor de la tarea.
+ * @param {Object} user - Objeto que representa al usuario actual.
+ * @param {Object} project - Objeto que contiene la información del proyecto al que pertenece la tarea.
+ * @returns {Promise} - Una promesa que se resuelve después de agregar el contenedor de la tarea al DOM.
+ */
+async function taskBin(task, assignments, collaborators, ancla, user, project) {
     return new Promise(async (resolve) => {
+        // Crear el contenedor de la tarea
         const containerTask = document.createElement('LI');
         containerTask.dataset.taskId = task.id;
         containerTask.classList.add('taskContainer');
@@ -158,7 +204,7 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
         const taskContentContainer = document.createElement('DIV');
         taskContentContainer.classList.add('taskContentContainer');
 
-        // Información varia de la tarea
+        // Información variada de la tarea
         const taskInfo = document.createElement('DIV');
         taskInfo.classList.add('taskInfo');
 
@@ -244,7 +290,7 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
         editTaskBtn.classList.add('editTaskBtn');
         editTaskBtn.classList.add('actionImg');
         editTaskBtn.onclick = function () {
-            editTaskModal(tasks, task, user, project);
+            editTaskModal(task, user, project);
         };
 
         // Botón de eliminar tarea
@@ -273,14 +319,6 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
                         if (kanbanView) {
                             showTasksKanban();
                         }
-                        // tasks = tasks.filter(deletedTask => deletedTask.id !== task.id);
-                        // if (generalView) {
-                        //     showTasks(tasks, user, project);
-                        //     showCalendar(tasks, user, project);
-                        // }
-                        // if (kanbanView) {
-                        //     showTasksKanban();
-                        // }
                     }
                 }
             });
@@ -367,7 +405,7 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
 
         // Validación para mostrar las botones de acción de la tarea
         if (user.id !== project.user_id) {
-            taskActionsContainer.style.display= 'none';
+            taskActionsContainer.style.display = 'none';
             deleteTaskBtn.style.display = 'none';
             editTaskBtn.style.display = 'none';
             commentTaskBtn.style.display = 'none';
@@ -380,7 +418,7 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
         // Validación que el usuario sea colaborador de la tarea
         if (taskCollaborators.includes(user.id) || project.user_id === user.id) {
             checkTask.disabled = false;
-            taskActionsContainer.style.display= 'block';
+            taskActionsContainer.style.display = 'block';
             editTaskBtn.style.display = 'block';
             commentTaskBtn.style.display = 'block';
         }
@@ -392,7 +430,7 @@ async function taskBin(tasks, task, assignments, collaborators, ancla, user, pro
             checkTask.checked = true;
             checkTask.disabled = true;
         }
-        // Resolve la Promesa después de agregar el elemento al DOM
+        // Resolver la Promesa después de agregar el elemento al DOM
         resolve(containerTask);
     });
 }

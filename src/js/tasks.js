@@ -1,9 +1,20 @@
+/**
+ * Muestra las tareas en la interfaz de usuario.
+ * @param {Array} tasks - Lista de tareas a mostrar.
+ * @param {Object} user - Información del usuario.
+ * @param {Object} project - Información del proyecto actual.
+ */
 async function showTasks(tasks, user, project) {
+    // Obtener la lista de colaboradores y asignaciones
     let collaborators = await getCollaborators();
     let assignments = await getAssign();
-
+    // Elemento HTML que contiene la lista de tareas
     const tasksList = document.querySelector('#tasks-list');
     tasksList.innerHTML = '';
+    /**
+     * Verificar si no hay tareas disponibles, 
+     * se muestra un mensaje al usuario
+     */
     if (tasks.length === 0) {
         const textNoTasks = document.createElement('P');
         textNoTasks.textContent = '¡Es hora de dar un paso adelante en tu proyecto! Agrega nuevas tareas para alcanzar tus objetivos. ¡Cada tarea te acerca un paso más hacia el éxito! Haz clic en el botón de abajo para empezar a añadir tareas ahora mismo.';
@@ -11,44 +22,50 @@ async function showTasks(tasks, user, project) {
         tasksList.appendChild(textNoTasks);
         return;
     }
-
+    // Mapear cada tarea a una promesa que ejecuta la función taskBin
     const promises = tasks.map(task => {
-        return taskBin(tasks, task, assignments, collaborators, tasksList, user, project);
+        return taskBin(task, assignments, collaborators, tasksList, user, project);
     });
 
-    // Esperamos a que se resuelvan las promesas de la función taskBin
+    // Esperar a que se resuelvan todas las promesas
     Promise.all(promises).then(() => {
         showContentTask();
         taskActionsMenu();
     });
 }
 
-// async function viewTask(task, session_id, project) {
-//     let collaborators = await getCollaborators();
-//     let assignments = await getAssign();
-// }
-
-function newTaskModal(tasks, user, project) {
+/**
+ * Abre el modal para añadir una nueva tarea.
+ * @param {Object} user - Información del usuario actual.
+ * @param {Object} project - Información del proyecto actual.
+ */
+function newTaskModal(user, project) {
+    // Mostrar el modal para añadir tarea
     const taskModal = document.querySelector('#taskModal');
     taskModal.style.display = 'flex';
 
+    // Configurar el botón de añadir tarea
     const addTaskBtn = document.querySelector('#addTaskBtn');
     addTaskBtn.textContent = 'Enviar';
 
+    // Configurar el título del modal
     document.querySelector('#modalLegend').textContent = 'Nueva tarea';
+    // Limpiar el formulario
     cleanForm();
 
-    // Indico que la fecha de entrega de la tarea sea como máximo la fecha de entrega del proyecto
+    // Establecer la fecha máxima de entrega de la tarea como la fecha de entrega del proyecto
     const taskDeadline = taskModal.querySelector('#taskDeadline');
     taskDeadline.max = project.deadline;
 
-    // Utilizo una función anónima como manejador de eventos
+    // Manejador de eventos para el botón de añadir tarea
     const handleAddTaskClick = async function (e) {
         e.preventDefault();
         let newTask = [];
+
+        // Obtener los valores del formulario
         const taskTitle = document.querySelector('#taskTitle').value.trim();
         if (taskTitle === '') {
-            // Si el nombre de la tarea está vacio se muestra un error
+            // Mostrar un error si el nombre de la tarea está vacío
             showAlert('El nombre es obligatorio', 'error');
             return;
         }
@@ -57,9 +74,12 @@ function newTaskModal(tasks, user, project) {
         const taskPriority = document.querySelector('#taskPriority').value.trim();
         const taskStatus = document.querySelector('#taskStatus').value.trim();
 
+        // Crear el objeto de la nueva tarea
         newTask = { 'title': taskTitle, 'description': taskDescription, 'deadline': taskDeadline, 'priority': taskPriority || "0", 'status': taskStatus, 'project_id': project.id };
 
+        // Añadir la tarea a través de la función addTask
         if (await addTask(newTask)) {
+            // Actualizar la lista de tareas y el calendario según la vista actual
             let tasks = await getTasks();
             if (generalView) {
                 showTasks(tasks, user, project);
@@ -70,30 +90,34 @@ function newTaskModal(tasks, user, project) {
             }
         }
 
-        // const newTaskId = await addTask(newTask)
-        // if (newTaskId !== false) {
-        //     newTask.id = newTaskId;
-        //     tasks.push(newTask);
-        // }
-
-
-        // Elimino el manejador de eventos después de su ejecución
+        // Eliminar el manejador de eventos después de su ejecución
         addTaskBtn.removeEventListener('click', handleAddTaskClick);
     };
     addTaskBtn.addEventListener('click', handleAddTaskClick);
 }
 
-function editTaskModal(tasks, task, user, project) {
+/**
+ * Abre el modal para editar la información de una tarea.
+ * @param {Object} task - Objeto que contiene la información de la tarea a editar.
+ * @param {Object} user - Objeto que representa al usuario que realiza la edición.
+ * @param {Object} project - Objeto que contiene la información del proyecto al que pertenece la tarea.
+ */
+function editTaskModal(task, user, project) {
+    // Mostrar el modal de edición de la tarea
     const taskModal = document.querySelector('#taskModal');
     taskModal.style.display = 'flex';
 
+    // Configurar el botón de edición de la tarea en el modal
     const editTaskBtn = document.querySelector('#addTaskBtn');
     editTaskBtn.textContent = 'Actualizar tarea';
 
+    // Establecer el título del modal
     document.querySelector('#modalLegend').textContent = 'Editar tarea';
 
+    // Limpiar el formulario del modal
     cleanForm();
 
+    // Establecer los valores actuales de la tarea en los campos del formulario
     let taskTitle = document.querySelector('#taskTitle');
     taskTitle.value = task.title;
     let taskDescription = document.querySelector('#taskDescription');
@@ -105,7 +129,7 @@ function editTaskModal(tasks, task, user, project) {
     taskPriority.value = task.priority;
     let taskStatus = document.querySelector('#taskStatus').value = task.status;
 
-    // Deshabilito los campos que el usuario no debería modificar al editar la tarea cuando la tiene asignada
+    // Deshabilitar los campos que el usuario que no es propietario del proyecto no debe modificar al editar la tarea
     if (user.id !== project.user_id) {
         taskTitle.setAttribute('readonly', true);
         taskDescription.setAttribute('readonly', true);
@@ -113,11 +137,13 @@ function editTaskModal(tasks, task, user, project) {
         taskPriority.disabled = true;
     }
 
+    // Manejador de evento para la acción de actualización de la tarea
     const handleAddTaskClick = async function (e) {
         e.preventDefault();
+        // Obtener los nuevos valores de la tarea desde los campos del formulario
         taskTitle = document.querySelector('#taskTitle').value.trim();
+        // Validar que el nombre de la tarea no esté vacío
         if (taskTitle === '') {
-            // Si el nombre de la tarea está vacio se muestra un error
             showAlert('El nombre es obligatorio', 'error');
             return;
         }
@@ -125,6 +151,7 @@ function editTaskModal(tasks, task, user, project) {
         taskDeadline = document.querySelector('#taskDeadline').value.trim();
         taskPriority = document.querySelector('#taskPriority').value.trim();
         taskStatus = document.querySelector('#taskStatus').value.trim();
+        // Crear el objeto de tarea actualizada con los nuevos valores
         task = {
             'id': task.id,
             'project_id': task.project_id,
@@ -134,33 +161,25 @@ function editTaskModal(tasks, task, user, project) {
             'deadline': taskDeadline,
             'priority': taskPriority
         };
+        // Actualizar la tarea y realizar las acciones correspondientes según la vista
         if (await updateTask(task)) {
             let tasks = await getTasks();
             if (generalView) {
                 showTasks(tasks, user, project);
                 showCalendar(tasks, user, project);
             }
-            if (kanbanView) {
-                showTasksKanban();
-            }
-            // const taskToUpdate = tasks.find(element => element.id === task.id);
-            // // Si se encuentra el array asociativo
-            // if (taskToUpdate) {
-            //     // Actualiza los valores de los campos necesarios
-            //     Object.assign(taskToUpdate, task);
-
-            // } else {
-            //     console.log('No se encontró el elemento con el id especificado.');
-            // }
+            if (kanbanView) showTasksKanban();
         }
-
+        // Eliminar el manejador de eventos después de su ejecución
         editTaskBtn.removeEventListener('click', handleAddTaskClick);
     };
+    // Agregar el manejador de evento al botón de actualización de la tarea
     editTaskBtn.addEventListener('click', handleAddTaskClick);
 }
 
-
-// Limpia el formulario
+/**
+ * Limpia los campos del formulario en el modal de tarea.
+ */
 function cleanForm() {
     document.querySelector('#taskTitle').value = '';
     document.querySelector('#taskDescription').value = '';
@@ -168,7 +187,11 @@ function cleanForm() {
     document.querySelector('#taskPriority').value = '';
 }
 
-// Consulta para añadir tarea
+/**
+ * Realiza una consulta para añadir una nueva tarea al proyecto.
+ * @param {Object} task - Objeto que contiene la información de la tarea a añadir.
+ * @returns {boolean} - Devuelve true si la tarea se añade correctamente.
+ */
 async function addTask(task) {
     // Construir la petición
     const data = new FormData();
@@ -194,10 +217,13 @@ async function addTask(task) {
                 icon: "success",
                 title: result.message
             });
+            // Devuelve true si la tarea se añade correctamente
             return true;
-            return result.task_id;
+            // También puedes devolver el ID de la tarea añadida si es relevante
+            // return result.task_id;
         }
     } catch (error) {
+        // En caso de error, muestra una alerta y registra el error en la consola
         infoAction.fire({
             icon: "error",
             title: "No se ha podido añadir la tarea"
@@ -205,10 +231,13 @@ async function addTask(task) {
         console.log(error);
         return false;
     }
-
 }
 
-// Consulta para actualizar tarea
+/**
+ * Realiza una consulta para actualizar la información de una tarea.
+ * @param {Object} task - Objeto que contiene la información actualizada de la tarea.
+ * @returns {boolean} - Devuelve true si la tarea se actualiza correctamente.
+ */
 async function updateTask(task) {
     // Construir la petición
     const data = new FormData();
@@ -236,9 +265,11 @@ async function updateTask(task) {
                 icon: "success",
                 title: result.message
             });
+            // Devuelve true si la tarea se actualiza correctamente
             return true;
         }
     } catch (error) {
+        // En caso de error, muestra una alerta y registra el error en la consola
         infoAction.fire({
             icon: "error",
             title: "No se ha podido actualizar la tarea"
@@ -246,10 +277,13 @@ async function updateTask(task) {
         console.log(error);
         return false;
     }
-
 }
 
-// Consulta para eliminar tarea
+/**
+ * Realiza una consulta para eliminar una tarea.
+ * @param {Object} task - Objeto que contiene la información de la tarea a eliminar.
+ * @returns {boolean} - Devuelve true si la tarea se elimina correctamente.
+ */
 async function deleteTask(task) {
     // Construir la petición
     const data = new FormData();
@@ -271,9 +305,11 @@ async function deleteTask(task) {
                 icon: "success",
                 title: result.message
             });
+            // Devuelve true si la tarea se elimina correctamente
             return true;
         }
     } catch (error) {
+        // En caso de error, muestra una alerta y registra el error en la consola
         infoAction.fire({
             icon: "error",
             title: "No se ha podido eliminar la tarea"
@@ -281,5 +317,4 @@ async function deleteTask(task) {
         console.log(error);
         return false;
     }
-
 }

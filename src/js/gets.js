@@ -1,4 +1,7 @@
-// Consulta a la API la información del proyecto actual
+/**
+ * Consulta a la API la información del proyecto actual.
+ * @returns {Promise<Object>} La información del proyecto actual.
+ */
 async function getProject() {
     try {
         const urlProject = getUrlProject();
@@ -10,7 +13,11 @@ async function getProject() {
         console.log(error);
     }
 }
-// Consulta a la API el listado de tareas del proyecto actual
+
+/**
+ * Consulta a la API el listado de tareas del proyecto actual.
+ * @returns {Promise<Array>} El listado de tareas del proyecto actual.
+ */
 async function getTasks() {
     try {
         const urlProject = getUrlProject();
@@ -24,7 +31,10 @@ async function getTasks() {
     }
 }
 
-// Consulta a la API las asignaciones a tareas
+/**
+ * Consulta a la API las asignaciones a tareas.
+ * @returns {Promise<Array>} El listado de asignaciones a tareas.
+ */
 async function getAssign() {
     try {
         const urlProject = getUrlProject();
@@ -38,7 +48,10 @@ async function getAssign() {
     }
 }
 
-// Consulta a la API los colaboradores del proyecto actual
+/**
+ * Consulta a la API los colaboradores del proyecto actual.
+ * @returns {Promise<Array>} El listado de colaboradores del proyecto actual.
+ */
 async function getCollaborators() {
     try {
         const urlProject = getUrlProject();
@@ -51,9 +64,12 @@ async function getCollaborators() {
     }
 }
 
-// Consulta a la API los comentarios de una tarea
+/**
+ * Consulta a la API los comentarios de una tarea.
+ * @param {string} task_id - El ID de la tarea de la que se quieren obtener los comentarios.
+ * @returns {Promise<Object>} Los comentarios de la tarea especificada.
+ */
 async function getComments(task_id) {
-    // Construir la petición
     const data = new FormData();
     data.append('task_id', task_id);
     try {
@@ -70,7 +86,10 @@ async function getComments(task_id) {
     }
 }
 
-// Consulta a la API por los usuarios de la aplicación
+/**
+ * Consulta a la API por los usuarios de la aplicación.
+ * @returns {Promise<Array>} El listado de usuarios de la aplicación.
+ */
 async function getUsers() {
     try {
         const urlProject = getUrlProject();
@@ -84,7 +103,10 @@ async function getUsers() {
     }
 }
 
-// Consulta a la API por el id del usuario con sesión iniciada
+/**
+ * Consulta a la API por el ID del usuario con sesión iniciada.
+ * @returns {Promise<Object>} El usuario con sesión iniciada.
+ */
 async function getUser() {
     try {
         const urlProject = getUrlProject();
@@ -98,7 +120,10 @@ async function getUser() {
     }
 }
 
-// Devuelve el valor de la url para peticiones tipo get
+/**
+ * Devuelve el valor de la URL para peticiones tipo GET.
+ * @returns {string} El valor de la URL del proyecto actual.
+ */
 function getUrlProject() {
     const projectParams = new URLSearchParams(window.location.search);
     const project = Object.fromEntries(projectParams.entries());

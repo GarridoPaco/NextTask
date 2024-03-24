@@ -61,14 +61,20 @@ function versionWebp() {
         .pipe(notify({ message: 'Imagen Completada en webp' }));
 }
 
+// function watchArchivos() {
+//     watch(paths.scss, css);
+//     watch(paths.js, javascript);
+//     watch(paths.imagenes, versionWebp);
+//     watch(paths.imagenes, resizeImages);
+// }
 function watchArchivos() {
     watch(paths.scss, css);
     watch(paths.js, javascript);
-    watch(paths.imagenes, versionWebp);
-    watch(paths.imagenes, resizeImages);
 }
 
 exports.css = css;
 exports.watchArchivos = watchArchivos;
-exports.default = parallel(css, javascript, resizeImages, versionWebp, watchArchivos);
-exports.build = parallel(css, javascript, resizeImages, versionWebp);
+// exports.default = parallel(css, javascript, resizeImages, versionWebp, watchArchivos);
+exports.default = parallel(css, javascript, watchArchivos);
+// exports.build = parallel(css, javascript, resizeImages, versionWebp);
+exports.build = parallel(css, javascript);

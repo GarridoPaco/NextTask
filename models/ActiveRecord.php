@@ -2,42 +2,74 @@
 
 namespace Model;
 
+/**
+ * La clase ActiveRecord proporciona funcionalidades básicas para interactuar con la base de datos.
+ */
 class ActiveRecord
 {
 
+    /** @var mixed Identificador del registro en la base de datos */
     protected $id;
 
-    // Base DE DATOS
+    /** @var mixed Conexión a la base de datos */
     protected static $db;
+
+    /** @var string Nombre de la tabla en la base de datos */
     protected static $tabla = '';
+
+    /** @var array Columnas de la tabla en la base de datos */
     protected static $columnasDB = [];
 
-    // Alertas y Mensajes
+    /** @var array Alertas y mensajes */
     protected static $alertas = [];
 
-    // Definir la conexión a la BD - includes/database.php
+    /**
+     * Establece la conexión a la base de datos.
+     *
+     * @param mixed $database Conexión a la base de datos
+     */
     public static function setDB($database)
     {
         self::$db = $database;
     }
 
+    /**
+     * Agrega una alerta.
+     *
+     * @param string $tipo    Tipo de alerta
+     * @param string $mensaje Mensaje de la alerta
+     */
     public static function setAlerta($tipo, $mensaje)
     {
         static::$alertas[$tipo][] = $mensaje;
     }
-    // Validación
+
+    /**
+     * Obtiene las alertas.
+     *
+     * @return array Alertas
+     */
     public static function getAlertas()
     {
         return static::$alertas;
     }
 
+    /**
+     * Realiza la validación.
+     *
+     * @return array Alertas
+     */
     public function validar()
     {
         static::$alertas = [];
         return static::$alertas;
     }
 
-    // Registros - CRUD
+    /**
+     * Guarda un registro en la base de datos.
+     *
+     * @return mixed Resultado de la operación
+     */
     public function guardar()
     {
         $resultado = '';
@@ -51,6 +83,11 @@ class ActiveRecord
         return $resultado;
     }
 
+    /**
+     * Obtiene todos los registros de la tabla.
+     *
+     * @return array Resultado de la consulta
+     */
     public static function all()
     {
         $query = "SELECT * FROM " . static::$tabla;
@@ -58,7 +95,12 @@ class ActiveRecord
         return $resultado;
     }
 
-    // Busca un registro por su id
+    /**
+     * Busca un registro por su ID.
+     *
+     * @param int $id ID del registro
+     * @return mixed Registro encontrado
+     */
     public static function find($id)
     {
         $query = "SELECT * FROM " . static::$tabla  . " WHERE id = $id";
@@ -66,7 +108,12 @@ class ActiveRecord
         return array_shift($resultado);
     }
 
-    // Obtener Registro
+    /**
+     * Obtiene un número específico de registros.
+     *
+     * @param int $limite Número máximo de registros a obtener
+     * @return mixed Registro encontrado
+     */
     public static function get($limite)
     {
         $query = "SELECT * FROM " . static::$tabla . " LIMIT $limite";
@@ -74,7 +121,13 @@ class ActiveRecord
         return array_shift($resultado);
     }
 
-    // Busqueda Where con Columna 
+    /**
+     * Realiza una búsqueda por columna y valor.
+     *
+     * @param string $columna Nombre de la columna
+     * @param mixed $valor    Valor a buscar en la columna
+     * @return mixed Resultado de la búsqueda
+     */
     public static function where($columna, $valor)
     {
         $query = "SELECT * FROM " . static::$tabla . " WHERE $columna = '$valor'";
@@ -82,7 +135,13 @@ class ActiveRecord
         return array_shift($resultado);
     }
 
-    // Busqueda de todos los registros que pertenecen a un valor dado
+    /**
+     * Realiza una búsqueda de todos los registros que pertenecen a un valor dado en una columna.
+     *
+     * @param string $columna Nombre de la columna
+     * @param mixed $valor    Valor a buscar en la columna
+     * @return array Resultado de la búsqueda
+     */
     public static function belongsTo($columna, $valor)
     {
         $query = "SELECT * FROM " . static::$tabla . " WHERE $columna = '$valor'";
@@ -90,7 +149,12 @@ class ActiveRecord
         return $resultado;
     }
 
-    // SQL para Consultas Avanzadas.
+    /**
+     * Ejecuta una consulta SQL avanzada.
+     *
+     * @param string $consulta Consulta SQL
+     * @return mixed Resultado de la consulta
+     */
     public static function SQL($consulta)
     {
         $query = $consulta;
@@ -98,7 +162,11 @@ class ActiveRecord
         return $resultado;
     }
 
-    // crea un nuevo registro
+    /**
+     * Crea un nuevo registro en la base de datos.
+     *
+     * @return array Resultado de la operación de inserción
+     */
     public function crear()
     {
         // Sanitizar los datos
@@ -119,6 +187,11 @@ class ActiveRecord
         ];
     }
 
+    /**
+     * Actualiza el registro en la base de datos.
+     *
+     * @return bool Resultado de la operación de actualización
+     */
     public function actualizar()
     {
         // Sanitizar los datos
@@ -135,13 +208,15 @@ class ActiveRecord
         $query .= " WHERE id = '" . self::$db->escape_string($this->id) . "' ";
         $query .= " LIMIT 1 ";
 
-        // debuguear($query);
-
         $resultado = self::$db->query($query);
         return $resultado;
     }
 
-    // Eliminar un registro - Toma el ID de Active Record
+    /**
+     * Elimina el registro de la base de datos.
+     *
+     * @return bool Resultado de la operación de eliminación
+     */
     public function eliminar()
     {
         $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
@@ -149,6 +224,12 @@ class ActiveRecord
         return $resultado;
     }
 
+    /**
+     * Ejecuta una consulta SQL y devuelve un array de objetos ActiveRecord.
+     *
+     * @param string $query Consulta SQL
+     * @return array Array de objetos ActiveRecord
+     */
     public static function consultarSQL($query)
     {
         // Consultar la base de datos
@@ -160,13 +241,19 @@ class ActiveRecord
             $array[] = static::crearObjeto($registro);
         }
 
-        // liberar la memoria
+        // Liberar la memoria
         $resultado->free();
 
-        // retornar los resultados
+        // Retornar los resultados
         return $array;
     }
 
+    /**
+     * Crea un objeto ActiveRecord a partir de un registro de base de datos.
+     *
+     * @param array $registro Registro de base de datos
+     * @return ActiveRecord Objeto ActiveRecord creado
+     */
     protected static function crearObjeto($registro)
     {
         $objeto = new static;
@@ -182,7 +269,11 @@ class ActiveRecord
 
 
 
-    // Identificar y unir los atributos de la BD
+    /**
+     * Obtiene los atributos del objeto ActiveRecord.
+     *
+     * @return array Atributos del objeto
+     */
     public function atributos()
     {
         $atributos = [];
@@ -193,6 +284,11 @@ class ActiveRecord
         return $atributos;
     }
 
+    /**
+     * Sanitiza los atributos del objeto ActiveRecord.
+     *
+     * @return array Atributos sanitizados
+     */
     public function sanitizarAtributos()
     {
         $atributos = $this->atributos();
@@ -203,6 +299,12 @@ class ActiveRecord
         return $sanitizado;
     }
 
+    /**
+     * Sincroniza los atributos del objeto ActiveRecord con los valores proporcionados.
+     *
+     * @param array $args Valores a sincronizar
+     * @return void
+     */
     public function sincronizar($args = [])
     {
         foreach ($args as $key => $value) {

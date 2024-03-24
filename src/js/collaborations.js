@@ -1,4 +1,9 @@
-// Filtros de búsqueda de tareas asignadas
+/**
+ * Gestiona los filtros de búsqueda de tareas asignadas.
+ * 
+ * Selecciona los elementos de filtro y colaboraciones, y añade un evento de escucha para filtrar las tareas asignadas
+ * según su estado al cambiar la selección del filtro.
+ */
 const collaborations = document.querySelectorAll('.collaborationBin');
 const filters = document.querySelectorAll('#filters input[type="radio');
 
@@ -7,7 +12,11 @@ filters.forEach(radio => {
     radio.addEventListener('input', filterTasks);
 });
 
-// Función que muestra/oculta las tareas asignadas según su estado
+/**
+ * Filtra las tareas asignadas según su estado y muestra u oculta las colaboraciones correspondientes.
+ * 
+ * @param {Event} e - Objeto del evento de cambio de selección del filtro.
+ */
 function filterTasks(e) {
     const filter = e.target.value;
 

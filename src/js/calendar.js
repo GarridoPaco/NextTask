@@ -1,8 +1,15 @@
+/**
+ * Muestra un calendario con las fechas de entrega de tareas y del proyecto.
+ * 
+ * @param {Array} tasks - Arreglo de objetos que representan las tareas del proyecto.
+ * @param {object} user - Objeto que representa al usuario actual.
+ * @param {object} project - Objeto que representa el proyecto actual.
+ */
 async function showCalendar(tasks, user, project) {
   const calendar = document.getElementById('calendar');
   if (calendar === null) return;
 
-  // Añado como evento la fecha de entrega del proyecto
+  // Añadir la fecha de entrega del proyecto como evento
   let events = [];
   const projectDeadline = {}
   projectDeadline.title = "Fecha de entrega";
@@ -12,6 +19,7 @@ async function showCalendar(tasks, user, project) {
 
   events.push(projectDeadline);
 
+  // Iterar sobre las tareas y crear eventos para cada una
   tasks.forEach(task => {
     let event = {}; // Inicializar el objeto event
 
@@ -24,6 +32,7 @@ async function showCalendar(tasks, user, project) {
     events.push(event);
   });
 
+  // Configurar y renderizar el calendario con FullCalendar
   const newCalendar = new FullCalendar.Calendar(calendar, {
     initialView: 'dayGridMonth',
     locale: 'esLocale',
@@ -41,21 +50,29 @@ async function showCalendar(tasks, user, project) {
       };
     },
     eventMouseEnter: function (info) {
+      // Agregar tooltip al evento del calendario
       tippy(info.el, {
         content: info.event.title,
 
       });
     },
     eventClick: function (info) {
+      // Abrir el modal de edición al hacer clic en una tarea
       if (!info.event.id) return;
       const taskToUpdate = tasks.find(task => task.id === info.event.id);
-      editTaskModal(tasks, taskToUpdate, user, project);
+      editTaskModal(taskToUpdate, user, project);
     }
   });
   newCalendar.render()
 }
 
-//Función para pasar el icono correspondiente a los eventos del calendario
+/**
+ * Devuelve el icono correspondiente al estado y prioridad de un evento del calendario.
+ * 
+ * @param {string} icon - Estado del evento ('0' para pendiente, '1' para en progreso, '2' para completado).
+ * @param {number} color - Índice del color de prioridad del evento.
+ * @returns {string} - Código SVG o imagen correspondiente al icono del evento.
+ */
 function eventIcon(icon, color) {
   const priorityColors = ['green', 'yellow', 'red'];
   switch (icon){

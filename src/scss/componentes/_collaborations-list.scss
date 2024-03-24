@@ -3,15 +3,10 @@
 
 #collaborationContainer {
     list-style: none;
-    @include m.grid(1, 1, 1rem);
-
-    @include m.tablet {
-        @include m.grid(2, 1, 1rem);
-    }
-
-    @include m.desktop {
-        @include m.grid(4, 1, 1rem);
-    }
+    display: grid;
+    grid-auto-flow: dense;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    grid-gap: 1rem;
 
     .collaborationBin {
         display: grid;

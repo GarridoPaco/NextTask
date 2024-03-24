@@ -1,5 +1,11 @@
 <?php 
 
+/**
+ * Define y gestiona las rutas de la aplicación web, 
+ * asegurando que las solicitudes HTTP sean dirigidas a 
+ * los controladores correspondientes para su procesamiento.
+ */
+
 require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\LoginController;
@@ -80,5 +86,6 @@ $router->post('/api/assignment/delete', [AssignmentController::class, 'delete'])
 // API para obtener los usuarios y el usuario activo
 $router->get('/api/users', [UserController::class, 'users']);
 $router->get('/api/user', [UserController::class, 'user']);
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

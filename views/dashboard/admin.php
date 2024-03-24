@@ -14,7 +14,7 @@
         <?php foreach ($users as $user) : ?>
             <tr class="userInfo">
                 <td><?php echo ($user->id . " "); ?></td>
-                <td><img src="<?php echo ("build/img/" . $user->image . ".jpg"); ?>" alt="Imagen de perfil"></td>
+                <td><img src="<?php echo ("build/img/profile/" . $user->image . ".jpg"); ?>" alt="Imagen de perfil"></td>
                 <td><?php echo ($user->name . " "); ?></td>
                 <td><?php echo ($user->last_name . " "); ?></td>
                 <td><?php echo ($user->email . " "); ?></td>
@@ -23,7 +23,7 @@
                     <div class="adminAction">
                         <form action="/admin" method="post">
                             <input class="boton" type="submit" value="Eliminar usuario" />
-                            <input type="hidden" name="user_id" value="<?php echo ('89') ?>">
+                            <input type="hidden" name="user_id" value="<?php echo ($user->id); ?>">
                         </form>
                     </div>
                 </td>

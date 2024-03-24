@@ -2,6 +2,10 @@
 
 namespace Model;
 
+/**
+ * Clase que representa las asignaciones de tareas a usuarios en un proyecto.
+ * Extiende la clase ActiveRecord para realizar operaciones CRUD en la tabla 'assignments'.
+ */
 class Assignment extends ActiveRecord
 {
     protected static $tabla = 'assignments';
@@ -11,6 +15,11 @@ class Assignment extends ActiveRecord
     public $deadline;
     public $project_id;
 
+    /**
+     * Constructor de la clase Assignment.
+     *
+     * @param array $args Los argumentos para inicializar la asignación.
+     */
     public function __construct($args = [])
     {
         $this->user_id = $args['user_id'] ?? null;
@@ -19,8 +28,13 @@ class Assignment extends ActiveRecord
         $this->project_id = $args['project_id'] ?? null;
     }
 
-    // Get asignaciones
-    public static function getAssingns($project_id)
+    /**
+     * Obtiene todas las asignaciones de tareas para un proyecto específico.
+     *
+     * @param int $project_id El ID del proyecto.
+     * @return mixed|array|bool Los resultados de la consulta o false si hay un error.
+     */
+    public static function getAssignment($project_id)
     {
         $query = "SELECT assignments.*, project_id 
         FROM assignments LEFT OUTER JOIN tasks ON assignments.task_id=tasks.id WHERE project_id = '$project_id'";
@@ -28,8 +42,12 @@ class Assignment extends ActiveRecord
         return $resultado;
     }
 
-    // Eliminar asignación
-    public function eliminarAsignacion()
+    /**
+     * Elimina una asignación de tarea.
+     *
+     * @return bool True si la asignación se eliminó correctamente, false en caso contrario.
+     */
+    public function deleteAssignment()
     {
         $query = "DELETE FROM "  . static::$tabla .
             " WHERE user_id = " . parent::$db->escape_string($this->user_id) .
@@ -37,9 +55,13 @@ class Assignment extends ActiveRecord
         $resultado = self::$db->query($query);
         return $resultado;
     }
-
-    // Buscar asignación
-    public function buscarAsignacion()
+    
+    /**
+     * Busca una asignación de tarea específica.
+     *
+     * @return mixed|bool El resultado de la consulta o false si hay un error.
+     */
+    public function findAssignment()
     {
         $query = "SELECT * FROM "  . static::$tabla .
             " WHERE user_id = " . parent::$db->escape_string($this->user_id) .
