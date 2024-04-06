@@ -329,6 +329,8 @@ class DashboardController
      * 
      * Si la solicitud HTTP es de tipo POST, actualiza la información del perfil del usuario, 
      * incluyendo la imagen de perfil si se proporciona una nueva.
+     * La nueva imagen de perfil es comprimida, recortada con un aspect ratio de 1:1 y 
+     * redimensionada a 100x100 píxeles
      * 
      * @param Router $router El enrutador de la aplicación.
      * @return void
@@ -372,9 +374,44 @@ class DashboardController
 
                     // Generar un nombre único para cada imagen
                     $imgName = md5(uniqid(rand(), true));
-                    move_uploaded_file($profileImg['tmp_name'], $imgDir . $imgName . ".jpg");
 
-                    // Añadir la imagen al objeto usuario
+                    // Ruta completa de la imagen
+                    $imgPath = $imgDir . $imgName . ".jpg";
+
+                    // Crear una nueva imagen a partir del archivo subido
+                    $imgUploaded = imagecreatefromjpeg($profileImg['tmp_name']);
+
+                    // Dimensiones originales de la imagen subida
+                    $originalWidth = imagesx($imgUploaded);
+                    $originalHeigth = imagesy($imgUploaded);
+
+                    // Calcular las coordenadas de recorte para mantener el aspect ratio de 1:1
+                    if ($originalWidth > $originalHeigth) {
+                        $x = ($originalWidth - $originalHeigth) / 2;
+                        $y = 0;
+                        $widthCut = $originalHeigth;
+                        $heigthCut = $originalHeigth;
+                    } else {
+                        $x = 0;
+                        $y = ($originalHeigth - $originalWidth) / 2;
+                        $widthCut = $originalWidth;
+                        $heigthCut = $originalWidth;
+                    }
+
+                    // Crear una nueva imagen con las dimensiones deseadas
+                    $newImg = imagecreatetruecolor(100, 100);
+
+                    // Recortar la imagen original y copiarla en la nueva imagen
+                    imagecopyresampled($newImg, $imgUploaded, 0, 0, $x, $y, 100, 100, $widthCut, $heigthCut);
+
+                    // Guardar la imagen recortada en el servidor
+                    imagejpeg($newImg, $imgPath, 75);
+
+                    // Liberar memoria
+                    imagedestroy($imgUploaded);
+                    imagedestroy($newImg);
+
+                    // Añadir el nombre de la imagen al objeto usuario
                     $usuario->image = $imgName;
                 }
 
@@ -405,7 +442,7 @@ class DashboardController
         $router->render('dashboard/profile', [
             'titulo' => 'Perfil',
             'alertas' => $alertas,
-            'admin' => $usuario->admin
+            'admin' => isset($usuario) ? $usuario->admin : 0
         ]);
     }
 
@@ -478,6 +515,67 @@ class DashboardController
             'usuario' => $usuario,
             'alertas' => $alertas,
             'admin' => $usuario->admin
+        ]);
+    }
+
+    /**
+     * Maneja la eliminación del perfil de usuario.
+     * Se requiere que el usuario esté autenticado para acceder a esta función.
+     * 
+     * Si la solicitud HTTP es de tipo POST, intenta eliminar el perfil de usuario
+     * junto con la foto de perfil asociada.
+     * 
+     * @param Router $router El enrutador de la aplicación.
+     * @return void
+     */
+    public static function deleteProfile(Router $router)
+    {
+        // Iniciar sesión y verificar autenticación
+        session_start();
+        isAuth();
+
+        // Obtener el usuario a eliminar
+        $user = User::find($_POST['user_id']);
+
+        // Arreglo para almacenar alertas
+        $alertas = [];
+
+        // Procesar solicitud de eliminación de cuenta
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $user = User::find($_POST['user_id']);
+
+            // Verificación de que el usuario exista
+            if (!$user) {
+                // Si el usuario no existe, establecer una alerta de error
+                User::setAlerta('error', 'El usuario no existe');
+                $alertas = User::getAlertas();
+            } else {
+                // Intentar eliminar el usuario
+                if (empty($alertas)) {
+                    if ($user->eliminar()) {
+
+                        // Eliminar la foto de perfil asociada al usuario
+                        unlink('build/img/profile/' . $user->image . ".jpg");
+
+                        // Redirigir al usuario a la página de inicio
+                        header('Location: /');
+                        exit;
+                    } else {
+
+                        // Si no se puede eliminar, establecer una alerta de error
+                        User::setAlerta('error', 'El usuario no se ha podido eliminar');
+                        $alertas = User::getAlertas();
+                    }
+                }
+            }
+        }
+
+        $router->render('dashboard/profile', [
+            'titulo' => 'Perfil',
+            'usuario' => $user,
+            'alertas' => $alertas,
+            'admin' => isset($user) ? $user->admin : 0
         ]);
     }
 

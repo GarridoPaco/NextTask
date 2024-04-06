@@ -24,7 +24,7 @@ if ($admin === '1') {
         </div>
         <div class="campo">
             <label for="image">Foto de perfil</label>
-            <input type="file" accept="image/jpeg, image/png" name="image" id="image" />
+            <input type="file" accept="image/jpeg" name="image" id="image" />
         </div>
         <input type="submit" class="boton" id="updateProfileBtn" value="Actualizar perfil">
     </form>
@@ -41,6 +41,13 @@ if ($admin === '1') {
         </div>
         <input type="submit" class="boton" value="Actualizar password">
     </form>
+    
+    <form class="formulario" id="deleteProfileForm" action="/deleteProfile" method="post">
+    <legend class="descripcion-pagina">Eliminar cuenta</legend>
+        <input type="submit" value="Eliminar Cuenta" class="boton" id="deleteProfileBtn">
+        <input type="hidden" name="user_id" value="<?php echo $_SESSION['id'] ?>">
+    </form>
 </div>
 <?php include_once __DIR__ . '/footer-dashboard.php' ?>
-<?php $script = "<script src='build/js/utils.js'></script>";?>
+<?php $script = "<script src='build/js/utils.js'></script>"; ?>
+<?php $script .= "<script src='build/js/profile.js'></script>";?>
