@@ -21,3 +21,4 @@
         </div>
     </div> <!-- .contenedor-sm -->
 </div>
+<?php include_once __DIR__ .'/../templates/footer.php'; ?>
