@@ -71,6 +71,11 @@ function newTaskModal(user, project) {
         }
         const taskDescription = document.querySelector('#taskDescription').value.trim();
         const taskDeadline = document.querySelector('#taskDeadline').value.trim();
+        if (taskDeadline === '') {
+            // Mostrar un error si la fecha de la tarea está vacía
+            showAlert('Introduce una fecha de entrega', 'error');
+            return;
+        }
         const taskPriority = document.querySelector('#taskPriority').value.trim();
         const taskStatus = document.querySelector('#taskStatus').value.trim();
 
