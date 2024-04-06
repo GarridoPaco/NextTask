@@ -35,9 +35,8 @@
     .taskHeader {
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
         padding-bottom: 1rem;
-        //border-bottom: solid 2px v.$azulLiso;
 
         .checkTask {
             cursor: pointer;
@@ -114,6 +113,20 @@
             }
 
             .taskStatusIcon {
+                width: 2rem;
+                height: auto;
+                margin-right: 2rem;
+            }
+        }
+        .taskDeadline {
+            display: flex;
+            align-items: center;
+
+            .taskDeadlineText {
+                margin: .5rem 0;
+            }
+
+            .taskDeadlineIcon {
                 width: 2rem;
                 height: auto;
                 margin-right: 2rem;

@@ -8,23 +8,16 @@
         margin-bottom: 4rem;
         color: v.$azulOscuro;
         font-weight: 600;
+        display: inline-block;
+        text-align: center;
     }
     .campo{
         display: flex;
 
         flex-direction: column;
-        // @include m.tablet {
-        //     align-items: center;
-        //     flex-direction: row;
-        // }
         margin-bottom: 2rem;
         label{
             margin-bottom: 1rem;
-            // @include m.tablet {
-            //     flex: 0 0 10rem;
-            //     margin-bottom: 0rem;
-            // }
-
             span{
                 color: v.$gris;
                 font-size: 1.2rem;
