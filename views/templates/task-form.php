@@ -13,14 +13,8 @@
                 <label for="taskDescription">Descripción</label>
                 <textarea id="taskDescription" name="description" placeholder="Descripción de la tarea"></textarea>
             </div>
-            <!-- <div class="campo">
-                <label for="taskCollaborators">Asignar a </label>
-                <select name="taskCollaborators" id="taskCollaborators">
-                <option value=""></option>
-                </select>
-            </div> -->
             <div class="campo">
-                <label for="taskDeadline">Fecha de entrega</label>
+                <label for="taskDeadline">Fecha de entrega <span>Obligatorio</span></label>
                 <input type="date" id="taskDeadline" placeholder="Fecha de entrega" name="deadline" min="<?php echo(date('Y-m-d')) ?>">
             </div>
             <div class="campo">
