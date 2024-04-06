@@ -53,6 +53,7 @@ $router->get('/collaboration', [DashboardController::class, 'collaboration']);
 $router->get('/collaboration-kanban', [DashboardController::class, 'collaborationKanban']);
 $router->get('/profile', [DashboardController::class, 'profile']);
 $router->post('/profile', [DashboardController::class, 'profile']);
+$router->post('/deleteProfile', [DashboardController::class, 'deleteProfile']);
 $router->post('/changePassword', [DashboardController::class, 'changePassword']);
 $router->post('/invitation', [DashboardController::class, 'invitation']);
 
