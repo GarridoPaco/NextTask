@@ -98,6 +98,11 @@ async function showTasksKanban() {
             // Redireccionar al usuario a su página de inicio en caso de error
             window.location.href = "/dashboard";
         });
+
+        // Difuminado del fondo al mostrar el mensaje de alerta
+        const alertBackground = document.querySelector('.swal2-container');
+        alertBackground.style.backdropFilter = "blur(4px)";
+        
         console.log(error);
     }
 }

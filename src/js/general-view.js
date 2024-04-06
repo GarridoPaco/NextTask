@@ -91,6 +91,10 @@ async function main() {
         }).then(() => {
             window.location.href = "/dashboard";
         });
+        
+        // Difuminado del fondo al mostrar el mensaje de alerta
+        const alertBackground = document.querySelector('.swal2-container');
+        alertBackground.style.backdropFilter = "blur(4px)";
         console.log(error);
     }
 }
