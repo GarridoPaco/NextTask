@@ -216,6 +216,7 @@ async function taskBin(task, assignments, collaborators, ancla, user, project) {
         taskDescriptionIcon.classList.add('taskDescriptionIcon');
         taskDescriptionIcon.alt = 'Descripción de la tarea';
         taskDescriptionIcon.src = 'build/img/info_icon.svg';
+        taskDescriptionIcon.title = 'Descripción de la tarea';
         taskDescription.appendChild(taskDescriptionIcon);
 
         const taskDescriptionText = document.createElement('P');
@@ -236,6 +237,7 @@ async function taskBin(task, assignments, collaborators, ancla, user, project) {
         const taskPriorityColor = document.createElement('DIV');
         taskPriorityColor.classList.add('taskPriorityColor');
         const optionsPriorityColor = ['#82E0AA', '#F7DC6F', '#F1948A'];
+        taskPriorityColor.title = 'Prioridad de la tarea';
         taskPriorityColor.style.backgroundColor = optionsPriorityColor[task.priority];
         taskPriority.appendChild(taskPriorityColor);
 
@@ -258,6 +260,7 @@ async function taskBin(task, assignments, collaborators, ancla, user, project) {
             'build/img/complete_icon.svg'];
         taskStatusIcon.alt = 'Imagen del estado de la tarea';
         taskStatusIcon.src = optionsIconStatus[task.status];
+        taskStatusIcon.title = 'Estado de la tarea';
         taskStatus.appendChild(taskStatusIcon);
 
         const taskStatusText = document.createElement('P');
@@ -267,6 +270,24 @@ async function taskBin(task, assignments, collaborators, ancla, user, project) {
         taskStatus.appendChild(taskStatusText);
 
         taskInfo.appendChild(taskStatus);
+
+        // Fecha de entrega de la tarea
+        const taskDeadline = document.createElement('DIV');
+        taskDeadline.classList.add('taskDeadline');
+
+        const taskDeadlineIcon = document.createElement('IMG');
+        taskDeadlineIcon.classList.add('taskDeadlineIcon');
+        taskDeadlineIcon.alt = 'Imagen de la fecha de entrega de la tarea';
+        taskDeadlineIcon.src = 'build/img/deadline_icon.svg';
+        taskDeadlineIcon.title = 'Fecha de entrega';
+        taskDeadline.appendChild(taskDeadlineIcon);
+
+        const taskDeadlineText = document.createElement('P');
+        taskDeadlineText.classList.add('taskDeadlineText');
+        taskDeadlineText.textContent = formatDate(task.deadline);
+        taskDeadline.appendChild(taskDeadlineText);
+
+        taskInfo.appendChild(taskDeadline);
 
         // Contenedor del menú de las acciones de las tareas
         const taskActionsContainer = document.createElement('DIV');
