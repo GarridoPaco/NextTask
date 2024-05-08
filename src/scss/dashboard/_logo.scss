@@ -8,29 +8,18 @@
 
 
     img {
-        width: 10rem;
+        width: 4rem;
         height: auto;
     }
 
     .nexttask {
         font-weight: 400;
-        font-size: 5rem;
+        font-size: 2.5rem;
         color: v.$blanco;
         margin: 0;
 
         span {
             font-weight: 700;
-        }
-    }
-
-    @include m.tablet {
-        img {
-            width: 4rem;
-            height: auto;
-        }
-
-        .nexttask {
-            font-size: 2.5rem;
         }
     }
 }

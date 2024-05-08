@@ -28,7 +28,7 @@
             <input type="submit" class="boton" value="Crear cuenta">
         </form>
         <div class="acciones">
-            <a href="/">¿Ya tienes tu cuenta? Inicia sesión</a>
+            <a href="/login">¿Ya tienes tu cuenta? Inicia sesión</a>
             <a href="/forget">Olvidé mi contraseña</a>
         </div>
     </div> <!-- .contenedor-sm -->

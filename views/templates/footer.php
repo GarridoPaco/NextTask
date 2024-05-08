@@ -5,7 +5,7 @@
             <h2>¿Preparado para mejorar tu productividad?</h2>
             <div class="button-group">
                 <a href="/create" class="boton">Regístrate gratis</a>
-                <a href="" class="boton">Prueba NextTask</a>
+                <a href="/login" class="boton">Prueba NextTask</a>
             </div>
         </div>
         <div class="spacer"></div>

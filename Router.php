@@ -42,7 +42,7 @@ class Router
             // Llama a la función asociada a la ruta
             call_user_func($fn, $this); // This es para pasar argumentos
         } else {
-            echo "Página No Encontrada o Ruta no válida";
+            echo "Página No Encontrada o Ruta no válida.";
         }
     }
 

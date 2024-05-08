@@ -1,0 +1,88 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.home_main {
+    width: 90%;
+    margin: auto;
+    @include m.desktop {
+        width: 80%;
+    }
+
+    .home_introduction {
+        padding: 5rem 0;
+        margin: auto;
+        width: 80%;
+
+        .introduction_title {
+            text-align: center;
+            font-weight: 400;
+            margin: 0;
+            font-size: 4rem;
+            @include m.tablet {
+                font-size: 6rem;
+            }
+        }
+
+        .introduction_description {
+            text-align: center;
+            font-size: 1.8rem;
+            color: black;
+        }
+
+        .boton {
+
+            width: 100%;
+
+            @include m.tablet {
+                width: 18rem;
+            }
+        }
+    }
+
+    .home_functionalities {
+
+        .functionalities_title {
+            text-align: center;
+            font-weight: 300;
+            font-size: 5rem;
+            color: black;
+        }
+        .functionality {
+            display: flex;
+            flex-direction: column;
+            margin: 3rem 0;
+            @include m.desktop {
+                flex-direction: row;
+            }
+            .functionality_info {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                margin-right: 3rem;
+                margin-top: 3rem;
+                justify-content: center;
+
+                .functionality_title {
+                    font-weight: 500;
+                    text-align: center;
+                    @include m.tablet {
+                        text-align: left;
+                    }
+                }
+                .functionality_description {
+                    color: black;
+                    font-size: 1.5rem;
+                    text-indent: 2rem;
+                }
+            }
+            .functionality_img {
+                flex: 1;
+                border-radius: 1rem;
+                width: 100%;
+                @include m.desktop {
+                    width: 50%;
+                }
+            }
+        }
+    }
+}

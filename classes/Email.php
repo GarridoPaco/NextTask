@@ -151,8 +151,6 @@ class Email
         $mail->CharSet = 'UTF-8';
         // Contenido del email
         $contenido = "<html>";
-        $contenido .= "<body style='background-color: #bbd5f1ff'; width: 50%; margin: auto;>";
-        $contenido .= '<img style="margin: auto;"src="build/img/check_logo_clear.svg" alt="Logo NextTask">';
         $contenido .= "<p style='text-aling: center;'><strong>Hola " . $this->email . "</strong>. Has sido invitado por " . $this->name . " " . $this->last_name . " a colaborar en un proyecto en NextTask.</p>";
         $contenido .= "<p>Regístrate aquí para colaborar: <a href='". $_ENV['PROJECT_URL'] ."'>Registrar</a></p>";
         $contenido .= "<p>Saludos, el equipo de NextTask</p>";

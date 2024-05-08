@@ -1,5 +1,5 @@
 /**
- * Gestiona el menú móvil y los estilos de la barra de usuario.
+ * Gestiona el menú móvil y los estilos de la barra de usuario del dashboard.
  */
 const mobileMenuBtn = document.querySelector('#mobileMenuBtn');
 const mobileCloseBtn = document.querySelector('#mobileCloseBtn');
@@ -8,7 +8,6 @@ const sidebar = document.querySelector('.sidebar');
 if (mobileMenuBtn) {
     mobileMenuBtn.addEventListener('click', function () {
         sidebar.classList.add('show');
-        console.log('menu mobile');
     });
 }
 // Cierra el menú móvil al hacer clic en el botón de cerrar

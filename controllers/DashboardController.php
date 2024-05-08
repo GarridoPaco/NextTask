@@ -110,7 +110,8 @@ class DashboardController
                 // Si el usuario existe, intentar eliminarlo
                 if (empty($alertas)) {
                     if ($user->eliminar()) {
-
+                        // Eliminar la foto de perfil asociada al usuario
+                        unlink('build/img/profile/' . $user->image . ".jpg");
                         // Si se elimina correctamente, establecer una alerta de éxito
                         User::setAlerta('exito', 'Usuario eliminado correctamente');
                         $alertas = User::getAlertas();

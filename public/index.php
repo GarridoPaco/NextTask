@@ -16,13 +16,18 @@ use Controllers\UserController;
 use Controllers\AssignmentController;
 use Controllers\ProjectController;
 use Controllers\CommentController;
-
+use Controllers\IndexController;
 use MVC\Router;
 $router = new Router();
+// Index
+$router->get('/', [IndexController::class, 'index']);
+$router->get('/development', [IndexController::class, 'development']);
+$router->get('/resources', [IndexController::class, 'resources']);
+$router->get('/help', [IndexController::class, 'help']);
 
 // Login
-$router->get('/', [LoginController::class, 'login']);
-$router->post('/', [LoginController::class, 'login']);
+$router->get('/login', [LoginController::class, 'login']);
+$router->post('/login', [LoginController::class, 'login']);
 $router->get('/logout', [LoginController::class, 'logout']);
 
 // Crear cuenta

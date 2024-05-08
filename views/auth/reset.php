@@ -18,7 +18,7 @@
             </form>
         <?php endif; ?>
         <div class="acciones">
-            <a href="/">¿Ya tienes tu cuenta? Inicia sesión</a>
+            <a href="/login">¿Ya tienes tu cuenta? Inicia sesión</a>
             <a href="/create">Crea una cuenta</a>
         </div>
     </div> <!-- .contenedor-sm -->

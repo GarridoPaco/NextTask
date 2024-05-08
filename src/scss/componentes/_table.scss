@@ -1,6 +1,12 @@
 @use 'base/variables' as v;
 @use 'base/mixins' as m;
 
+table {
+    width: 100%;
+}
+td, th {
+    width: auto;
+}
 table,thead, th, td{
     border: solid 2px v.$blanco;
     border-collapse: collapse;

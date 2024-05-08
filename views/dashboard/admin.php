@@ -21,8 +21,8 @@
                 <td><?php echo (($user->verified == 1) ? "Cuenta verificada" : "Cuenta no verificada" . " "); ?></td>
                 <td>
                     <div class="adminAction">
-                        <form action="/admin" method="post">
-                            <input class="boton" type="submit" value="Eliminar usuario" />
+                        <form id="deleteUserForm" action="/admin" method="post">
+                            <input class="boton" type="submit" value="Eliminar usuario" id="deleteUserBtn"/>
                             <input type="hidden" name="user_id" value="<?php echo ($user->id); ?>">
                         </form>
                     </div>
@@ -33,3 +33,4 @@
 </table>
 <?php include_once __DIR__ . '/footer-dashboard.php' ?>
 <?php $script = "<script src='build/js/utils.js'></script>"; ?>
+<?php $script .= "<script src='build/js/admin.js'></script>";?>

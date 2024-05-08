@@ -1,0 +1,62 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.help_main {
+    width: 90%;
+    margin: auto;
+
+    @include m.desktop {
+        width: 80%;
+    }
+    
+    .help_faqs {
+        padding-bottom: 5rem;
+    }
+
+    .help_title {
+        text-align: center;
+        font-weight: 400;
+        margin: 0;
+        font-size: 4rem;
+        padding: 5rem 0;
+
+        @include m.tablet {
+            font-size: 6rem;
+        }
+    }
+
+    .faq_container {
+        position: relative;
+        margin: 1rem 1rem;
+
+        .faq_label {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            // padding: 1rem 0;
+            cursor: pointer;
+
+            .faq_label-question {
+                font-size: 1.8rem;
+                font-weight: 500;
+            }
+
+            .faq_label-toggle {
+                font-size: 3rem;
+            }
+        }
+
+        .faq_content {
+            text-indent: 2rem;
+            font-size: 1.5rem;
+            height: 0;
+            overflow: hidden;
+
+        }
+    }
+
+    .faq_container.active .faq_content {
+        height: auto;
+    }
+}

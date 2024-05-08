@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Función para depurar variables imprimiéndolas en formato legible para humanos y deteniendo la ejecución del script.
+ * Función para depurar variables imprimiéndolas en formato legible y deteniendo la ejecución del script.
  *
  * @param mixed $variable La variable que se va a depurar.
  * @return string

@@ -1,0 +1,81 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.development_main {
+    width: 80%;
+    margin: auto;
+
+    .development_introduction {
+        padding: 5rem 0;
+        margin: auto;
+        width: 80%;
+
+        .introduction_title {
+            text-align: center;
+            font-weight: 400;
+            margin: 0;
+        }
+
+        .introduction_description {
+            text-align: center;
+            font-size: 1.8rem;
+            color: black;
+        }
+    }
+
+    .development_author {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 5rem;
+
+        .author_img {
+            border-radius: 50%;
+            max-width: 100%;
+            width: 8rem;
+            height: auto;
+            margin: auto;
+        }
+    }
+
+    .development_techs, .development_tools {
+        margin-bottom: 5rem;
+    }
+
+    .development_title {
+        text-align: center;
+        font-weight: 300;
+        font-size: 5rem;
+        color: black;
+    }
+
+    .tech_title,
+    .tool_title {
+        font-weight: 500;
+        margin-bottom: 0rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .tech_img,
+    .tool_img {
+        border-radius: 1rem;
+        width: 5rem;
+        height: auto;
+        margin-right: 2rem;
+    }
+
+    .item_tools,
+    .item_techs {
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+    }
+
+    .author_description_text,
+    .tech_description,
+    .tool_description {
+        color: black;
+        font-size: 1.5rem;
+        text-indent: 2rem;
+    }
+}

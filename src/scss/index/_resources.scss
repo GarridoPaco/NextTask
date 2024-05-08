@@ -1,0 +1,57 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.resources_main {
+    width: 90%;
+    margin: auto;
+    @include m.desktop {
+        width: 80%;
+    }
+
+    .resources_introduction {
+        padding: 5rem 0;
+        margin: auto;
+        width: 80%;
+
+        .resources_title {
+            text-align: center;
+            font-weight: 400;
+            margin: 0;
+            font-size: 4rem;
+            @include m.tablet {
+                font-size: 6rem;
+            }
+        }
+
+        .resources_description {
+            text-align: center;
+            font-size: 1.8rem;
+            color: black;
+        }
+    }
+    .resources {
+        margin-bottom: 5rem;
+        .resources_list{
+            .resource_item {
+                margin: 2rem 0;
+                .resource_info {
+                    .resource_title {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        .resource_logo{
+                            margin-right: 1rem;
+                            width: 5rem;
+                            height: auto;
+                        }
+                    }
+                    .resource_description {
+                        color: black;
+                        font-size: 1.5rem;
+                        text-indent: 2rem;
+                    }
+                }
+            }
+        }
+    }
+}
