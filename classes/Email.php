@@ -151,7 +151,7 @@ class Email
         $mail->CharSet = 'UTF-8';
         // Contenido del email
         $contenido = "<html>";
-        $contenido .= "<p style='text-aling: center;'><strong>Hola " . $this->email . "</strong>. Has sido invitado por " . $this->name . " " . $this->last_name . " a colaborar en un proyecto en NextTask.</p>";
+        $contenido .= "<p><strong>Hola " . $this->email . "</strong>. Has sido invitado por " . $this->name . " " . $this->last_name . " a colaborar en un proyecto en NextTask.</p>";
         $contenido .= "<p>Regístrate aquí para colaborar: <a href='". $_ENV['PROJECT_URL'] ."'>Registrar</a></p>";
         $contenido .= "<p>Saludos, el equipo de NextTask</p>";
         $contenido .= "</body>";
